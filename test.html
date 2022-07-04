@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script type="text/javascript" src="./whenAll.js"></script>
+  <title>Document</title>
+</head>
+<body>
+    <div>
+      <input type="text" value="" id="test1">
+      <input type="text" value="" id="test2">
+    </div>
+
+    <div>
+      <input type="button" value="whenAll Test" onclick="javascript:click_whenAll();">
+    </div>
+</body>
+<script>
+  function click_whenAll(){
+    //$.get('http://127.0.0.1:5500/test2.html')
+    //$.get('http://127.0.0.1:5500/test3.html')
+    $.whenAll($.get('http://127.0.0.1:5500/test2.html')
+            , $.get('http://127.0.0.1:5500/test3.html'))
+      .then(
+        // success callback
+        function(request) {}
+        // failure callback - called once at the end
+        ,function() {}
+        // progress callback - called twice (before the failure callback)
+        ,function(data, state, jqXhr) {
+          debugger;
+          // $.ajax().done/fail so the params are conditional based on a success or failure
+          // The second param is consistently the state of the request.
+          if (state == 'sucess') {
+            // data is the data returned as expected
+            // jqXhr is what you expect
+            console.log('success');
+          }
+          else {
+            // data is actually the jqXhr object for failed requests
+            // jqXhr is the text of the error "Not Found" in this example
+          }
+        }
+      )
+    ;
+  }
+</script>
+</html>
